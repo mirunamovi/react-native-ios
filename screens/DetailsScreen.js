@@ -35,10 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
-    // padding: 7,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // flexDirection: 'column',
+  
   },
   container2: {
     flex: 1,
@@ -48,13 +45,10 @@ const styles = StyleSheet.create({
     paddingLeft: 50,
     paddingRight: 50,
 
-    // alignItems: 'center',
-    // justifyContent: 'center',
  
   },
 
   container3: {
-    // flex: 1,
     backgroundColor: 'black',
     borderRadius: 50,
     marginTop: 10,
@@ -65,7 +59,6 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 30,
-    // fontFamily: 'SF Pro',
   }, 
 
   button: {

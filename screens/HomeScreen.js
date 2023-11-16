@@ -28,6 +28,10 @@ const HomeScreen = ({ navigation }) => {
          onPress={() => navigation.navigate('Details')}>
            <Text style={[styles.text, {fontSize: 16,},]}>Details</Text>
         </Pressable>
+        <Pressable style={[styles.button, {backgroundColor: 'green',},]}
+         onPress={() => navigation.navigate('Count')}>
+           <Text style={[styles.text, {fontSize: 16,},]}>Count</Text>
+        </Pressable>
       </View>
         <StatusBar style="auto" />
     </View>
@@ -71,6 +75,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
+    marginBottom: 10
   },
 });
 
