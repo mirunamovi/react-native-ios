@@ -1,11 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 
 import { StyleSheet, Text, View, Button, Pressable} from 'react-native'
-import {React, useState, useEffect} from 'react'
+import {React, useState, useEffect, useMemeo} from 'react'
 
 const CountScreen = ({ navigation }) => {
+
+  const initialItems = new Array(29_999_999).fill(0).map((_, i) => { 
+    return {
+        id: i,
+        isSelected: i === 29_999_998,
+    };
+    });
   
   const [count, setCount] = useState(0);
+  const [items] = useState(initialItems);
+
+  const selectedItem = useMemo(items.find((item) => item.isSelected), [items]);
 
   useEffect(() => {
     console.log('The count is:', count);
@@ -19,7 +29,8 @@ const CountScreen = ({ navigation }) => {
          onPress={() => navigation.navigate('Home')}>
            <Text style={[styles.text, {fontSize: 16,},]}>Go to Home</Text>
         </Pressable>
-      <Text style={{marginTop: 10, fontSize: 70}}>Count:{count}</Text>
+      <Text style={{marginTop: 10, fontSize: 70}}>Count: {count}</Text>
+      <Text style={{marginTop: 10, fontSize: 70}}>Selected Item: {selectedItem}</Text>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
           <Pressable onPress={() => setCount(count - 1)} style={[styles.button, {backgroundColor: '#0A66C2', paddingBottom: 10},]}> 
             <Text style={[styles.text, {fontSize: 16,},]}>Decrement</Text>
