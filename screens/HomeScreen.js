@@ -27,6 +27,11 @@ const HomeScreen = ({ navigation }) => {
          onPress={() => navigation.navigate('Count')}>
            <Text style={[styles.text, {fontSize: 16,},]}>Count</Text>
         </Pressable>
+        <Pressable style={[styles.button, {backgroundColor: 'black',},]}
+         onPress={() => navigation.navigate('Login')}>
+           <Text style={[styles.text, {fontSize: 16,},]}>Login</Text>
+        </Pressable>
+
       </View>
         <StatusBar style="auto" />
     </View>      
