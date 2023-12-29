@@ -31,7 +31,10 @@ const HomeScreen = ({ navigation }) => {
          onPress={() => navigation.navigate('Login')}>
            <Text style={[styles.text, {fontSize: 16,},]}>Login</Text>
         </Pressable>
-
+        <Pressable style={[styles.button, {backgroundColor: 'black',},]}
+         onPress={() => navigation.navigate('Thermo')}>
+           <Text style={[styles.text, {fontSize: 16,},]}>Thermo</Text>
+        </Pressable>
       </View>
         <StatusBar style="auto" />
     </View>      
