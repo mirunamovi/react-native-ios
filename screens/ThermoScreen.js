@@ -1,182 +1,262 @@
-import React from 'react'; 
+import React, { useEffect, useState } from 'react';
 import { DataTable } from 'react-native-paper'; 
 import { StyleSheet, Text, View, Pressable, Image, Linking, ScrollView, Button} from 'react-native';
-import { StatusDisplayComponent} from "../../components/StatusDisplayComponent";
 
 const ThermoScreen = ({ navigation }) => {
 
-    // function setTemp(tmp) {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //       if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("TempSetp").innerHTML =
-    //         this.responseText;
-    //       }
-    //     };
-    //     xhttp.open("GET", "setTemp?TempSetp="+tmp, true);
-    //     xhttp.send();
-    //   }
+    const StatusDisplayComponent = () => {
+      const [centrStatus, setCentrStatus] = useState('');
+    
+      const getCentrStatus = async () => {
+        try {
+          const response = await fetch('http://192.168.0.70/getCentrStatus'); 
+          const data = await response.text();
+          setCentrStatus(data);
+        } catch (error) {
+          console.error('Error fetching data: ', error);
+          setCentrStatus("error dummy2");
+        }
+      };
+    
+      useEffect(() => {
+        const centrStatusInterval = setInterval(() => {
+          getCentrStatus();
+        }, 5000);
+    
+        return () => {
+          clearInterval(centrStatusInterval);
+        };
+      }, []);
+    
+      return (
+        <View>
+          <Text>{centrStatus}</Text>
+        </View>
+      );
+    };
+
+    const InteriorTempComponent = () => {
+      const [interiorTemp, setInteriorTemp] = useState('');
+    
+      const getInteriorTemp = async () => {
+        try {
+          const response = await fetch('http://192.168.0.70/getTempInt'); 
+          const data = await response.text();
+          setInteriorTemp(data);
+        } catch (error) {
+          console.error('Error fetching data: ', error);
+          setInteriorTemp("error dummy2");
+        }
+      };
+    
+      useEffect(() => {
+        const interiorTempInterval = setInterval(() => {
+          getInteriorTemp();
+        }, 5000);
+    
+        return () => {
+          clearInterval(interiorTempInterval);
+        };
+      }, []);
+    
+      return (
+        <View>
+          <Text>{interiorTemp}</Text>
+        </View>
+      );
+    };
+    
+
+    const TempSetComponent = () => {
+      const [tempSet, setTempSet] = useState('');
+    
+      const getTempSet = async () => {
+        try {
+          const response = await fetch('http://192.168.0.70/getTempSetp'); 
+          const data = await response.text();
+          setTempSet(data);
+        } catch (error) {
+          console.error('Error fetching data: ', error);
+          setTempSet("error dummy2");
+        }
+      };
+ 
+      const setTemp = async (tempSet) => {
+        try {
+          const response = await fetch(`http://192.168.0.70/setTemp?TempSetp=${tempSet}`);
+          const data = await response.text();
+          setTempSet(data);
+        } catch (error) {
+          console.error('Error fetching data: ', error);
+          setTempSet("not working the button");
+        }
+      };
+
+      useEffect(() => {
+        const tempSetInterval = setInterval(() => {
+          getTempSet();
+        }, 1000);
+    
+        return () => {
+          clearInterval(tempSetInterval);
+        };
+      }, []);
+    
+      return (
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
+          <Pressable style={styles.button} onPress={() => setTemp(1)}> 
+            <Text style={[styles.text, {fontSize: 20,},]} >- 0.5</Text>
+           </Pressable>
+          <Text>{tempSet}</Text>
+          <Pressable style={styles.button} onPress={() => setTemp(0)}> 
+            <Text style={[styles.text, {fontSize: 20,},]}>+ 0.5</Text>
+          </Pressable>
+        </View>
+
+      );
+    };
+
+    const Component = (getUrlSel, setUrl, getUrlCom) => {
+
+      const [regSet, setRegSet] = useState('');
+      const [regCom, setRegCom] = useState('');
+
+          const getRegSet = async () => {
+            try {
+              const response = await fetch(getUrlSel); 
+              const data = await response.text();
+              setRegSet(data);
+            } catch (error) {
+              console.error('Error fetching data: ', error);
+              setRegSet("error dummy2");
+            }
+          };
+
+          const getRegCom = async () => {
+            try {
+              const response = await fetch(getUrlCom); 
+              const data = await response.text();
+              setRegCom(data);
+            } catch (error) {
+              console.error('Error fetching data: ', error);
+              setRegCom("error dummy2");
+            }
+          };
+
+          const setReg = async (regSet) => { 
+            try {
+              const response = await fetch(`${setUrl}${regSet}`);
+              const data = await response.text();
+              setRegSet(data);
+            } catch (error) {
+              console.error('Error fetching data: ', error);
+              setTempSet("not working the button");
+            }
+          };
+
+          useEffect(() => {
+            const setIntervalId = setInterval(() => {
+              getRegSet();
+              getRegCom();
+            }, 5000);
+
+            return () => {
+              clearInterval(setIntervalId);
+            };
+          }, []);
+
+          return { regSet, regCom, setReg };
+        };
+
+
+      const AutomatComponent = () => {
+        const {regSet, regCom, setReg} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
+          return (
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+              <Pressable style={styles.button} onPress={() => setReg(0)}>
+                <Text>Crono</Text>
+              </Pressable>
+              <Pressable style={styles.button} onPress={() => setReg(1)}>
+                <Text>Senzor</Text>
+              </Pressable>
+            </View>
+          );
+      };
+
+    const ManualComponent = () => {
+      const {regSet, regCom, setReg} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
       
-    //   function setReg(reg) {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //       if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("RegSel").innerHTML =
-    //         this.responseText;
-    //       }
-    //     };
-    //     xhttp.open("GET", "setReg?RegSel="+reg, true);
-    //     xhttp.send();
-    //   }
+        return (
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
+            <Pressable style={styles.button} onPress={() => setReg(2)}>
+              <Text>Start</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={() => setReg(3)}>
+              <Text>Stop</Text>
+            </Pressable>
+          </View>
+        );
+    };
+
+    const RegimComponent = () => {
+      const {regSet, setRegSet} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
+      const {regCom, setRegCom} = Component('', ``, 'http://192.168.0.70/getRegCom');
       
-    //   setInterval(function() {
-    //     // Call a function repetatively with 2 Second interval
-    //     getCentrStatus();
-    //   }, 5000); //2000mSeconds update rate
-      
-    //   function getCentrStatus() {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //       if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("CentrStatus").innerHTML =
-    //         this.responseText;
-    //       }
-    //     };
-    //     xhttp.open("GET", "getCentrStatus", true);
-    //     xhttp.send();
-    //   }
-      
-    //   setInterval(function() {
-    //     // Call a function repetatively with 2 Second interval
-    //     getTempInt();
-    //   }, 3000); //2000mSeconds update rate
-      
-    //   function getTempInt() {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //       if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("TempInt").innerHTML =
-    //         this.responseText;
-    //       }
-    //     };
-    //     xhttp.open("GET", "getTempInt", true);  
-    //     xhttp.send();
-    //   }
-      
-    //   setInterval(function() {
-    //     getRegCom();
-    //   }, 2500);
-      
-    //   function getRegCom() {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //       if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("RegCom").innerHTML =
-    //         this.responseText;
-    //       }
-    //     };
-    //     xhttp.open("GET", "getRegCom", true);  
-    //     xhttp.send();
-    //   }
-      
-    //   setInterval(function() {
-    //     getTensBat();
-    //   }, 3500); 
-      
-    //   function getTensBat() {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //       if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("TensBat").innerHTML =
-    //         this.responseText;
-    //       }
-    //     };
-    //     xhttp.open("GET", "getTensBat", true);  
-    //     xhttp.send();
-    //   }
-      
-    //   setInterval(function() {
-    //     getRegSel();
-    //   }, 4500); 
-      
-    //   function getRegSel() {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //       if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("RegSel").innerHTML =
-    //         this.responseText;
-    //       }
-    //     };
-    //     xhttp.open("GET", "getRegSel", true);
-    //     xhttp.send();
-    //   }
-      
-    //   setInterval(function() {
-    //     getTempSetp();
-    //   }, 4000);
-      
-      
-    //   function getTempSetp() {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //       if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("TempSetp").innerHTML =
-    //         this.responseText;
-    //       }
-    //     };
-    //     xhttp.open("GET", "getTempSetp", true);
-    //     xhttp.send();
-    //   }
+        return (
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
+            <Text>{regSet}</Text>
+            <Text>{regCom}</Text>
+          </View>
+        );
+    };
 
     return (
         
         <DataTable style={styles.container}> 
-    
+
+        {/* Comanda centrala */}
         <DataTable.Row> 
           <DataTable.Cell>Comanda centrala:</DataTable.Cell> 
           <DataTable.Cell><StatusDisplayComponent></StatusDisplayComponent></DataTable.Cell>
         </DataTable.Row> 
     
+        {/* Temperatura interior */}
         <DataTable.Row> 
           <DataTable.Cell>Temperatura interior:</DataTable.Cell> 
-          <DataTable.Cell>20 grade</DataTable.Cell> 
+          <DataTable.Cell><InteriorTempComponent></InteriorTempComponent></DataTable.Cell> 
         </DataTable.Row>
 
+        {/* Temperatura setata */}
         <DataTable.Row> 
           <DataTable.Cell>Temperatura setata:</DataTable.Cell> 
-          <DataTable.Cell>
-            <Pressable>
-                <Text>- 0.5</Text>
-            </Pressable>
-            25 grade
-            <Pressable>
-                <Text>+ 0.5</Text>
-            </Pressable>
-            </DataTable.Cell> 
+          <DataTable.Cell style={{flex: 1}}>
+              <TempSetComponent></TempSetComponent>
+          </DataTable.Cell> 
         </DataTable.Row> 
 
+        {/* Automat */}
         <DataTable.Row> 
           <DataTable.Cell>Automat</DataTable.Cell> 
-          <DataTable.Cell><Pressable>
-                <Text>Crono</Text>
-            </Pressable></DataTable.Cell>
-          <DataTable.Cell><Pressable>
-                <Text>Senzor</Text>
-            </Pressable></DataTable.Cell>
+          <DataTable.Cell>
+            <AutomatComponent></AutomatComponent>
+          </DataTable.Cell>
         </DataTable.Row> 
 
+        {/* Manual */}
         <DataTable.Row> 
           <DataTable.Cell>Manual</DataTable.Cell> 
-          <DataTable.Cell>Pornit</DataTable.Cell>
-          <DataTable.Cell>Oprit</DataTable.Cell>
+          <DataTable.Cell>
+          <ManualComponent></ManualComponent>
+          </DataTable.Cell>
         </DataTable.Row>
 
+        {/* Regim */}
         <DataTable.Row> 
           <DataTable.Cell>Regim:</DataTable.Cell> 
-          <DataTable.Cell>Senzor</DataTable.Cell>
-          <DataTable.Cell>Pornit</DataTable.Cell>
+          <RegimComponent></RegimComponent>
         </DataTable.Row>  
- 
+
+        {/* Tensiunea bateriei */}
         <DataTable.Row> 
           <DataTable.Cell>Tensiunea bateriei</DataTable.Cell> 
           <DataTable.Cell>0.05 V</DataTable.Cell> 
@@ -195,5 +275,13 @@ const styles = StyleSheet.create({
   tableHeader: { 
     backgroundColor: '#DCDCDC', 
   }, 
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+    elevation: 3,
+    borderColor:'black', 
+    borderWidth: 1 
+  },
 });
  export default ThermoScreen;
