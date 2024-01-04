@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
   return (
       <View style={styles.container}>
       <View  style={styles.container2} >
-        <Text style={[styles.text, {paddingBottom: 10,},]}>Hello World!</Text>
+        {/* <Text style={[styles.text, {paddingBottom: 10,},]}>Hello World!</Text>
         <Text style={[styles.text, {paddingBottom: 20, fontSize: 23,},]}>This is my first React Native App.</Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
           <Pressable onPress={()=>{openURL('https://www.linkedin.com/in/miruna-movileanu-6b818a235/')}} style={[styles.button, {backgroundColor: '#0A66C2', paddingBottom: 10},]}> 
@@ -30,7 +30,7 @@ const HomeScreen = ({ navigation }) => {
         <Pressable style={[styles.button, {backgroundColor: 'black',},]}
          onPress={() => navigation.navigate('Login')}>
            <Text style={[styles.text, {fontSize: 16,},]}>Login</Text>
-        </Pressable>
+        </Pressable> */}
         <Pressable style={[styles.button, {backgroundColor: 'black',},]}
          onPress={() => navigation.navigate('Thermo')}>
            <Text style={[styles.text, {fontSize: 16,},]}>Thermo</Text>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   container2: {
     flex: 1,
     backgroundColor: 'purple',
-    borderRadius: 50,
+    // borderRadius: 50,
     paddingTop: 100,
     paddingLeft: 50,
     paddingRight: 50,

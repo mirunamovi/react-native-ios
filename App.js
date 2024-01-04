@@ -18,9 +18,9 @@ const App = () => {
         }} initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Thermo" component={ThermoScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Count" component={CountScreen} />
+        {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
+        {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
+        {/* <Stack.Screen name="Count" component={CountScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
