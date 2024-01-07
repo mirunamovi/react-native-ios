@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DataTable } from 'react-native-paper'; 
-import { StyleSheet, Text, View, Pressable, Image, Linking, ScrollView, Button} from 'react-native';
+import { StyleSheet, Text, View, Pressable} from 'react-native';
+import { Button } from "react-native-paper";
 
 const ThermoScreen = ({ navigation }) => {
 
@@ -173,12 +174,18 @@ const ThermoScreen = ({ navigation }) => {
         const {regSet, regCom, setReg} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
           return (
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
-              <Pressable style={styles.button} onPress={() => setReg(0)}>
-                <Text>Crono</Text>
-              </Pressable>
-              <Pressable style={styles.button} onPress={() => setReg(1)}>
-                <Text>Senzor</Text>
-              </Pressable>
+              <Button
+          mode="contained"
+          onPress={() => setReg(0)}
+        >
+          Crono
+        </Button>
+        <Button
+          mode="contained"
+          onPress={() => setReg(1)}
+        >
+          Senzor
+        </Button>
             </View>
           );
       };
@@ -188,12 +195,18 @@ const ThermoScreen = ({ navigation }) => {
       
         return (
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
-            <Pressable style={styles.button} onPress={() => setReg(2)}>
-              <Text>Start</Text>
-            </Pressable>
-            <Pressable style={styles.button} onPress={() => setReg(3)}>
-              <Text>Stop</Text>
-            </Pressable>
+            <Button
+          mode="contained"
+          onPress={() => setReg(2)}
+        >
+          Start
+        </Button>
+        <Button
+          mode="contained"
+          onPress={() => setReg(3)}
+        >
+          Stop
+        </Button>
           </View>
         );
     };
