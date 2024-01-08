@@ -105,13 +105,21 @@ const ThermoScreen = ({ navigation }) => {
     
       return (
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
-          <Pressable style={styles.button} onPress={() => setTemp(1)}> 
-            <Text style={[styles.text, {fontSize: 20,},]} >- 0.5</Text>
-           </Pressable>
+          <Button
+          mode="contained"
+          style={{marginTop: 10}}
+          onPress={() => setTemp(1)}
+        >
+          - 0.5
+        </Button>
           <Text>{tempSet}</Text>
-          <Pressable style={styles.button} onPress={() => setTemp(0)}> 
-            <Text style={[styles.text, {fontSize: 20,},]}>+ 0.5</Text>
-          </Pressable>
+          <Button
+          mode="contained"
+          style={{marginTop: 10}}
+          onPress={() => setTemp(0)}
+        >
+          + 0.5
+        </Button>
         </View>
 
       );
@@ -176,12 +184,14 @@ const ThermoScreen = ({ navigation }) => {
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
               <Button
           mode="contained"
+          style={{marginTop: 10}}
           onPress={() => setReg(0)}
-        >
+          compact     >
           Crono
         </Button>
         <Button
           mode="contained"
+          style={{marginTop: 10}}
           onPress={() => setReg(1)}
         >
           Senzor
@@ -197,12 +207,14 @@ const ThermoScreen = ({ navigation }) => {
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
             <Button
           mode="contained"
+          style={{marginTop: 10}}
           onPress={() => setReg(2)}
-        >
-          Start
+        ><Text> Start</Text>
+         
         </Button>
         <Button
           mode="contained"
+          style={{marginTop: 10}}
           onPress={() => setReg(3)}
         >
           Stop
@@ -266,7 +278,7 @@ const ThermoScreen = ({ navigation }) => {
         {/* Regim */}
         <DataTable.Row> 
           <DataTable.Cell>Regim:</DataTable.Cell> 
-          <RegimComponent></RegimComponent>
+          <DataTable.Cell><RegimComponent></RegimComponent></DataTable.Cell>
         </DataTable.Row>  
 
         {/* Tensiunea bateriei */}
@@ -294,7 +306,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     borderColor:'black', 
-    borderWidth: 1 
+    borderWidth: 1, 
+    marginTop: 1, 
   },
+  
 });
  export default ThermoScreen;
