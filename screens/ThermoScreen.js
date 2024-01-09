@@ -104,18 +104,18 @@ const ThermoScreen = ({ navigation }) => {
       }, []);
     
       return (
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
           <Button
           mode="contained"
-          style={{marginTop: 10}}
+          // style={{marginTop: 10}}
           onPress={() => setTemp(1)}
         >
           - 0.5
         </Button>
-          <Text>{tempSet}</Text>
+          <Text style={{marginTop: 10}}>{tempSet}</Text>
           <Button
           mode="contained"
-          style={{marginTop: 10}}
+          // style={{marginTop: 10}}
           onPress={() => setTemp(0)}
         >
           + 0.5
@@ -175,26 +175,24 @@ const ThermoScreen = ({ navigation }) => {
           }, []);
 
           return { regSet, regCom, setReg };
-        };
+   };
 
 
       const AutomatComponent = () => {
         const {regSet, regCom, setReg} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
           return (
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
               <Button
           mode="contained"
-          style={{marginTop: 10}}
           onPress={() => setReg(0)}
-          compact     >
-          Crono
+          compact     ><Text adjustsFontSizeToFit={true}>       Crono</Text>
+    
         </Button>
         <Button
           mode="contained"
-          style={{marginTop: 10}}
           onPress={() => setReg(1)}
         >
-          Senzor
+          <Text adjustsFontSizeToFit={true}>Sensor</Text>
         </Button>
             </View>
           );
@@ -204,17 +202,15 @@ const ThermoScreen = ({ navigation }) => {
       const {regSet, regCom, setReg} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
       
         return (
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
             <Button
           mode="contained"
-          style={{marginTop: 10}}
           onPress={() => setReg(2)}
         ><Text> Start</Text>
          
         </Button>
         <Button
           mode="contained"
-          style={{marginTop: 10}}
           onPress={() => setReg(3)}
         >
           Stop
