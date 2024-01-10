@@ -5,103 +5,107 @@ import { Button } from "react-native-paper";
 
 const ThermoScreen = ({ navigation }) => {
 
-    const StatusDisplayComponent = () => {
-      const [centrStatus, setCentrStatus] = useState('');
+  const StatusDisplayComponent = () => {
+    const [centrStatus, setCentrStatus] = useState('');
     
-      const getCentrStatus = async () => {
-        try {
-          const response = await fetch('http://192.168.0.70/getCentrStatus'); 
-          const data = await response.text();
-          setCentrStatus(data);
-        } catch (error) {
-          console.error('Error fetching data: ', error);
-          setCentrStatus("error dummy2");
-        }
-      };
-    
-      useEffect(() => {
-        const centrStatusInterval = setInterval(() => {
-          getCentrStatus();
-        }, 5000);
-    
-        return () => {
-          clearInterval(centrStatusInterval);
-        };
-      }, []);
-    
-      return (
-        <View>
-          <Text>{centrStatus}</Text>
-        </View>
-      );
+    const getCentrStatus = async () => {
+      try {
+        const response = await fetch('http://192.168.0.70/getCentrStatus'); 
+        const data = await response.text();
+        setCentrStatus(data);
+      }
+      catch (error) {
+        console.error('Error fetching data: ', error);
+        setCentrStatus("error dummy2");
+      }
     };
-
-    const InteriorTempComponent = () => {
-      const [interiorTemp, setInteriorTemp] = useState('');
     
-      const getInteriorTemp = async () => {
-        try {
-          const response = await fetch('http://192.168.0.70/getTempInt'); 
-          const data = await response.text();
-          setInteriorTemp(data);
-        } catch (error) {
-          console.error('Error fetching data: ', error);
-          setInteriorTemp("error dummy2");
-        }
+    useEffect(() => {
+      const centrStatusInterval = setInterval(() => {
+        getCentrStatus();
+      }, 5000);
+    
+      return () => {
+        clearInterval(centrStatusInterval);
       };
+    }, []);
     
-      useEffect(() => {
-        const interiorTempInterval = setInterval(() => {
-          getInteriorTemp();
-        }, 5000);
+    return (
+      <View>
+        <Text>{centrStatus}</Text>
+      </View>
+    );
+  };
+
+  const InteriorTempComponent = () => {
+    const [interiorTemp, setInteriorTemp] = useState('');
     
-        return () => {
-          clearInterval(interiorTempInterval);
-        };
-      }, []);
+    const getInteriorTemp = async () => {
+      try {
+        const response = await fetch('http://192.168.0.70/getTempInt'); 
+        const data = await response.text();
+        setInteriorTemp(data);
+      } 
+      catch (error) {
+        console.error('Error fetching data: ', error);
+        setInteriorTemp("error dummy2");
+      }
+    };
+    
+    useEffect(() => {
+      const interiorTempInterval = setInterval(() => {
+        getInteriorTemp();
+      }, 5000);
+    
+    return () => {
+      clearInterval(interiorTempInterval);
+      };
+    }, []);
     
       return (
         <View>
           <Text>{interiorTemp}</Text>
         </View>
       );
+  };
+    
+
+  const TempSetComponent = () => {
+    const [tempSet, setTempSet] = useState('');
+    
+    const getTempSet = async () => {
+      try {
+        const response = await fetch('http://192.168.0.70/getTempSetp'); 
+        const data = await response.text();
+        setTempSet(data);
+      } 
+      catch (error) {
+        console.error('Error fetching data: ', error);
+        setTempSet("error dummy2");
+      }
     };
-    
-
-    const TempSetComponent = () => {
-      const [tempSet, setTempSet] = useState('');
-    
-      const getTempSet = async () => {
-        try {
-          const response = await fetch('http://192.168.0.70/getTempSetp'); 
-          const data = await response.text();
-          setTempSet(data);
-        } catch (error) {
-          console.error('Error fetching data: ', error);
-          setTempSet("error dummy2");
-        }
-      };
  
-      const setTemp = async (tempSet) => {
-        try {
-          const response = await fetch(`http://192.168.0.70/setTemp?TempSetp=${tempSet}`);
-          const data = await response.text();
-          setTempSet(data);
-        } catch (error) {
-          console.error('Error fetching data: ', error);
-          setTempSet("not working the button");
-        }
-      };
+    const setTemp = async (tempSet) => {
+      try {
+        const response = await fetch(`http://192.168.0.70/setTemp?TempSetp=${tempSet}`);
+        const data = await response.text();
+        setTempSet(data);
+      } 
+      catch (error) {
+        console.error('Error fetching data: ', error);
+        setTempSet("not working the button");
+      }
+    };
 
-      useEffect(() => {
-        const tempSetInterval = setInterval(() => {
-          getTempSet();
-        }, 1000);
+    useEffect(() => {
+      const tempSetInterval = setInterval(() => {
+        getTempSet();
+      }, 1000);
     
-        return () => {
-          clearInterval(tempSetInterval);
+      return () => {
+        clearInterval(tempSetInterval);
         };
-      }, []);
+    }, []);
     
       return (
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -185,7 +189,7 @@ const ThermoScreen = ({ navigation }) => {
               <Button
           mode="contained"
           onPress={() => setReg(0)}
-          compact     ><Text adjustsFontSizeToFit={true}>       Crono</Text>
+          compact     ><Text adjustsFontSizeToFit={true}>Crono</Text>
     
         </Button>
         <Button
@@ -230,6 +234,37 @@ const ThermoScreen = ({ navigation }) => {
           </View>
         );
     };
+
+    const BatteryComponent = () => {
+      const [batterySet, setbatterySet] = useState('');
+
+      const getTensStatus = async () => {
+        try {
+          const response = await fetch('http://192.168.0.70/getTensBat'); 
+          const data = await response.text();
+          setbatterySet(data);
+        } catch (error) {
+          console.error('Error fetching data: ', error);
+          setbatterySet("error dummy2");
+        }
+      };
+  
+    useEffect(() => { 
+      const tensStatusInterval = setInterval(() => {
+        getTensStatus();
+      }, 5000);
+  
+      return () => {
+        clearInterval(tensStatusInterval);
+      };
+    }, []);
+  
+    return (
+      <View>
+        <Text>{batterySet}</Text>
+      </View>
+    );
+  };
 
     return (
         
@@ -280,14 +315,13 @@ const ThermoScreen = ({ navigation }) => {
         {/* Tensiunea bateriei */}
         <DataTable.Row> 
           <DataTable.Cell>Tensiunea bateriei</DataTable.Cell> 
-          <DataTable.Cell>0.05 V</DataTable.Cell> 
+          <DataTable.Cell><BatteryComponent></BatteryComponent></DataTable.Cell> 
         </DataTable.Row> 
       </DataTable> 
     ); 
-      
 
-};
-  
+
+};    
 const styles = StyleSheet.create({ 
   container: { 
     padding: 15, 
