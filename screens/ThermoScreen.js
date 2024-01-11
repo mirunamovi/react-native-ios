@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { DataTable } from 'react-native-paper'; 
-import { StyleSheet, Text, View, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Pressable, Dimensions} from 'react-native';
 import { Button } from "react-native-paper";
 
 const ThermoScreen = ({ navigation }) => {
+
+  const isMobile = Dimensions.get('window').width <= 650;
 
   const StatusDisplayComponent = () => {
     const [centrStatus, setCentrStatus] = useState('');
@@ -72,6 +74,19 @@ const ThermoScreen = ({ navigation }) => {
 
   const TempSetComponent = () => {
     const [tempSet, setTempSet] = useState('');
+    const [isMobile, setIsMobile] = useState(Dimensions.get('window').width <= 600);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(Dimensions.get('window').width <= 600);
+      };
+
+      Dimensions.addEventListener('change', handleResize);
+
+      return () => {
+        Dimensions.removeEventListener('change', handleResize);
+      };
+    }, []);
     
     const getTempSet = async () => {
       try {
@@ -105,26 +120,28 @@ const ThermoScreen = ({ navigation }) => {
       return () => {
         clearInterval(tempSetInterval);
         };
-    }, []);
+   `` }, []);
     
       return (
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+        
+        <View style={{flexDirection: isMobile ? 'column' : 'row', justifyContent: isMobile ? 'center' : 'space-between', alignItems: 'center'}}>
           <Button
           mode="contained"
-          // style={{marginTop: 10}}
           onPress={() => setTemp(1)}
+          // style={{flex: 1}}
         >
           - 0.5
         </Button>
-          <Text style={{marginTop: 10}}>{tempSet}</Text>
+          <Text style={{marginTop: 10, flex: 1}}>{tempSet}</Text>
           <Button
           mode="contained"
-          // style={{marginTop: 10}}
+          // style={{flex: 1}}
           onPress={() => setTemp(0)}
         >
           + 0.5
         </Button>
         </View>
+
 
       );
     };
@@ -267,7 +284,7 @@ const ThermoScreen = ({ navigation }) => {
   };
 
     return (
-        
+        <View>
         <DataTable style={styles.container}> 
 
         {/* Comanda centrala */}
@@ -317,22 +334,19 @@ const ThermoScreen = ({ navigation }) => {
           <DataTable.Cell>Tensiunea bateriei</DataTable.Cell> 
           <DataTable.Cell><BatteryComponent></BatteryComponent></DataTable.Cell> 
         </DataTable.Row> 
-      </DataTable> 
+      </DataTable>
+      </View>   
+
     ); 
-
-
 };    
 const styles = StyleSheet.create({ 
   container: { 
     padding: 15, 
     paddingTop: 100,
   }, 
-  tableHeader: { 
-    backgroundColor: '#DCDCDC', 
-  }, 
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    //alignItems: 'center',
+    //justifyContent: 'center',
     borderRadius: 4,
     elevation: 3,
     borderColor:'black', 
