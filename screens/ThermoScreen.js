@@ -124,19 +124,20 @@ const ThermoScreen = ({ navigation }) => {
     
       return (
         
-        <View style={{flexDirection: isMobile ? 'column' : 'row', justifyContent: isMobile ? 'center' : 'space-between', alignItems: 'center'}}>
+        <View style={{flex: 1, flexDirection: isMobile ? 'column' : 'row', justifyContent: isMobile ? 'center' : 'space-between', alignItems: 'center'}}>
           <Button
           mode="contained"
           onPress={() => setTemp(1)}
-          // style={{flex: 1}}
+          style={{margin: isMobile ? 4 : 0}}
         >
           - 0.5
         </Button>
-          <Text style={{marginTop: 10, flex: 1}}>{tempSet}</Text>
+          <Text>{tempSet}</Text>
           <Button
           mode="contained"
-          // style={{flex: 1}}
           onPress={() => setTemp(0)}
+          style={{margin: isMobile ? 5 : 0}}
+
         >
           + 0.5
         </Button>
@@ -146,7 +147,7 @@ const ThermoScreen = ({ navigation }) => {
       );
     };
 
-    const Component = (getUrlSel, setUrl, getUrlCom) => {
+    const ButtonsComponent = (getUrlSel, setUrl, getUrlCom) => {
 
       const [regSet, setRegSet] = useState('');
       const [regCom, setRegCom] = useState('');
@@ -200,27 +201,28 @@ const ThermoScreen = ({ navigation }) => {
 
 
       const AutomatComponent = () => {
-        const {regSet, regCom, setReg} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
+        const {regSet, regCom, setReg} = ButtonsComponent('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
           return (
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
               <Button
-          mode="contained"
-          onPress={() => setReg(0)}
-          compact     ><Text adjustsFontSizeToFit={true}>Crono</Text>
-    
-        </Button>
-        <Button
-          mode="contained"
-          onPress={() => setReg(1)}
-        >
-          <Text adjustsFontSizeToFit={true}>Sensor</Text>
-        </Button>
+                mode="contained"
+                onPress={() => setReg(0)}
+                
+              >
+              Crono
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => setReg(1)}
+              >
+              Senzor
+              </Button>
             </View>
           );
       };
 
     const ManualComponent = () => {
-      const {regSet, regCom, setReg} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
+      const {regSet, regCom, setReg} = ButtonsComponent('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
       
         return (
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -241,8 +243,8 @@ const ThermoScreen = ({ navigation }) => {
     };
 
     const RegimComponent = () => {
-      const {regSet, setRegSet} = Component('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
-      const {regCom, setRegCom} = Component('', ``, 'http://192.168.0.70/getRegCom');
+      const {regSet, setRegSet} = ButtonsComponent('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
+      const {regCom, setRegCom} = ButtonsComponent('', ``, 'http://192.168.0.70/getRegCom');
       
         return (
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, }}>
@@ -302,7 +304,7 @@ const ThermoScreen = ({ navigation }) => {
         {/* Temperatura setata */}
         <DataTable.Row> 
           <DataTable.Cell>Temperatura setata:</DataTable.Cell> 
-          <DataTable.Cell style={{flex: 1}}>
+          <DataTable.Cell>
               <TempSetComponent></TempSetComponent>
           </DataTable.Cell> 
         </DataTable.Row> 
@@ -345,8 +347,6 @@ const styles = StyleSheet.create({
     paddingTop: 100,
   }, 
   button: {
-    //alignItems: 'center',
-    //justifyContent: 'center',
     borderRadius: 4,
     elevation: 3,
     borderColor:'black', 
