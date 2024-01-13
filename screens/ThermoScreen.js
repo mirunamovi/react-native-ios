@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { DataTable } from 'react-native-paper'; 
-import { StyleSheet, Text, View, Pressable, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, Dimensions, SafeAreaView} from 'react-native';
 import { Button } from "react-native-paper";
 
-const ThermoScreen = ({ navigation }) => {
-
-  const isMobile = Dimensions.get('window').width <= 650;
+const ThermoScreen = () => {
 
   const StatusDisplayComponent = () => {
     const [centrStatus, setCentrStatus] = useState('');
@@ -64,11 +62,11 @@ const ThermoScreen = ({ navigation }) => {
       };
     }, []);
     
-      return (
-        <View>
-          <Text>{interiorTemp}</Text>
-        </View>
-      );
+    return (
+      <View>
+        <Text>{interiorTemp}</Text>
+      </View>
+    );
   };
     
 
@@ -123,27 +121,11 @@ const ThermoScreen = ({ navigation }) => {
    `` }, []);
     
       return (
-        
         <View style={{flex: 1, flexDirection: isMobile ? 'column' : 'row', justifyContent: isMobile ? 'center' : 'space-between', alignItems: 'center'}}>
-          <Button
-          mode="contained"
-          onPress={() => setTemp(1)}
-          style={{margin: isMobile ? 4 : 0}}
-        >
-          - 0.5
-        </Button>
+          <Button mode="contained" onPress={() => setTemp(1)} style={{margin: isMobile ? 4 : 0}}>- 0.5</Button>
           <Text>{tempSet}</Text>
-          <Button
-          mode="contained"
-          onPress={() => setTemp(0)}
-          style={{margin: isMobile ? 5 : 0}}
-
-        >
-          + 0.5
-        </Button>
+          <Button mode="contained" onPress={() => setTemp(0)} style={{margin: isMobile ? 5 : 0}}>+ 0.5</Button>
         </View>
-
-
       );
     };
 
@@ -204,40 +186,18 @@ const ThermoScreen = ({ navigation }) => {
         const {regSet, regCom, setReg} = ButtonsComponent('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
           return (
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Button
-                mode="contained"
-                onPress={() => setReg(0)}
-                
-              >
-              Crono
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => setReg(1)}
-              >
-              Senzor
-              </Button>
+              <Button mode="contained" onPress={() => setReg(0)}>Crono</Button>
+              <Button mode="contained" onPress={() => setReg(1)}>Senzor</Button>
             </View>
           );
       };
 
     const ManualComponent = () => {
       const {regSet, regCom, setReg} = ButtonsComponent('http://192.168.0.70/getRegSel', `http://192.168.0.70/setReg?RegSel=`, '');
-      
         return (
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Button
-          mode="contained"
-          onPress={() => setReg(2)}
-        ><Text> Start</Text>
-         
-        </Button>
-        <Button
-          mode="contained"
-          onPress={() => setReg(3)}
-        >
-          Stop
-        </Button>
+            <Button mode="contained" onPress={() => setReg(2)}>Start</Button>
+            <Button mode="contained" onPress={() => setReg(3)}>Stop</Button>
           </View>
         );
     };
@@ -286,8 +246,8 @@ const ThermoScreen = ({ navigation }) => {
   };
 
     return (
-        <View>
-        <DataTable style={styles.container}> 
+        <SafeAreaView edges={['left']} style={styles.container}>
+        <DataTable style={{maxWidth: 1000}}> 
 
         {/* Comanda centrala */}
         <DataTable.Row> 
@@ -337,14 +297,15 @@ const ThermoScreen = ({ navigation }) => {
           <DataTable.Cell><BatteryComponent></BatteryComponent></DataTable.Cell> 
         </DataTable.Row> 
       </DataTable>
-      </View>   
+      </SafeAreaView>   
 
     ); 
 };    
 const styles = StyleSheet.create({ 
-  container: { 
-    padding: 15, 
-    paddingTop: 100,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   }, 
   button: {
     borderRadius: 4,
