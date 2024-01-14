@@ -16,7 +16,9 @@ Navigate to the project directory
 ```
 Install dependencies
 npm install those:
+```bash
 ![image](https://github.com/mirunamovi/react-native-ios/assets/90201953/3ab8ebe0-a528-4253-89d7-b0d215488673)
+```
 
 Start the App:
 ```bash
@@ -50,8 +52,8 @@ Build the Android app:
 ```bash
 eas build --platform android --profile androidapk 
 ```
-After the building, in the terminal you will receive a link, copy that URL in the browser and it will be downloading a SDK file.
-Put that file on your Android device through USB or just write that link on the Android device browser and and it will be downloading.
+After building, you will receive a link in the terminal. Copy that URL into your browser, and it will download an SDK file.
+Place the file on your Android device using a USB connection or simply enter the link into the Android device's browser for the download to begin.
 Then you just simply install that sdk file and it should work fine.
 
 For debugging you can use:
