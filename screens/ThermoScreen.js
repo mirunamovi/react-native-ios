@@ -16,7 +16,7 @@ const ThermoScreen = () => {
       }
       catch (error) {
         console.error('Error fetching data: ', error);
-        setCentrStatus("error dummy2");
+        setCentrStatus("error fetching data");
       }
     };
     
@@ -48,7 +48,7 @@ const ThermoScreen = () => {
       } 
       catch (error) {
         console.error('Error fetching data: ', error);
-        setInteriorTemp("error dummy2");
+        setInteriorTemp("error fetching data");
       }
     };
     
@@ -72,11 +72,11 @@ const ThermoScreen = () => {
 
   const TempSetComponent = () => {
     const [tempSet, setTempSet] = useState('');
-    const [isMobile, setIsMobile] = useState(Dimensions.get('window').width <= 600);
+    const [isMobile, setIsMobile] = useState(Dimensions.get('window').width <= 350);
 
     useEffect(() => {
       const handleResize = () => {
-        setIsMobile(Dimensions.get('window').width <= 600);
+        setIsMobile(Dimensions.get('window').width <= 350);
       };
 
       Dimensions.addEventListener('change', handleResize);
@@ -94,7 +94,7 @@ const ThermoScreen = () => {
       } 
       catch (error) {
         console.error('Error fetching data: ', error);
-        setTempSet("error dummy2");
+        setTempSet("error fetching data");
       }
     };
  
@@ -141,7 +141,7 @@ const ThermoScreen = () => {
               setRegSet(data);
             } catch (error) {
               console.error('Error fetching data: ', error);
-              setRegSet("error dummy2");
+              setRegSet("error fetching data");
             }
           };
 
@@ -152,7 +152,7 @@ const ThermoScreen = () => {
               setRegCom(data);
             } catch (error) {
               console.error('Error fetching data: ', error);
-              setRegCom("error dummy2");
+              setRegCom("error fetching data");
             }
           };
 
@@ -224,7 +224,7 @@ const ThermoScreen = () => {
           setbatterySet(data);
         } catch (error) {
           console.error('Error fetching data: ', error);
-          setbatterySet("error dummy2");
+          setbatterySet("error fetching data");
         }
       };
   
