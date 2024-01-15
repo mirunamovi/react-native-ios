@@ -16,9 +16,9 @@ Navigate to the project directory
 ```
 Install dependencies
 npm install those:
-```bash
+
 ![image](https://github.com/mirunamovi/react-native-ios/assets/90201953/3ab8ebe0-a528-4253-89d7-b0d215488673)
-```
+
 
 Start the App:
 ```bash
